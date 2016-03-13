@@ -3,8 +3,6 @@ package flickrdemo.yomna.flickrdemo;
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,8 +19,8 @@ import org.json.JSONObject;
 public class MainActivity extends Activity implements Response.Listener,
         Response.ErrorListener {
     public static final String REQUEST_TAG = "MainVolleyActivity";
-    private TextView mTextView;
-    private Button mButton;
+    private TextView responseTextView;
+    private Button sendRequestButton;
     private RequestQueue mQueue;
 
     @Override
@@ -30,8 +28,8 @@ public class MainActivity extends Activity implements Response.Listener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextView = (TextView) findViewById(R.id.textView);
-        mButton = (Button) findViewById(R.id.button);
+        responseTextView = (TextView) findViewById(R.id.responseTextView);
+        sendRequestButton = (Button) findViewById(R.id.senReqestButton);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class MainActivity extends Activity implements Response.Listener,
                 new JSONObject(), this, this);
         jsonRequest.setTag(REQUEST_TAG);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+        sendRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mQueue.add(jsonRequest);
@@ -63,14 +61,14 @@ public class MainActivity extends Activity implements Response.Listener,
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        mTextView.setText(error.getMessage());
+        responseTextView.setText(error.getMessage());
     }
 
     @Override
     public void onResponse(Object response) {
-        mTextView.setText("Response is: " + response);
+        responseTextView.setText("Response is: " + response);
         try {
-            mTextView.setText(mTextView.getText() + "\n\n" + ((JSONObject) response).getString
+            responseTextView.setText(responseTextView.getText() + "\n\n" + ((JSONObject) response).getString
                     ("name"));
         } catch (JSONException e) {
             e.printStackTrace();

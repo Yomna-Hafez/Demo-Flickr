@@ -70,7 +70,7 @@ public class MainActivity extends Activity implements Response.Listener,
     public void onResponse(Object response) {
         mTextView.setText("Response is: " + response);
         try {
-            mTextView.setText(mTextView.getText() + "\n\n" + ((JSONObject) response).getString
+            mTextView.setText(mTextView.getText() + "\n\n\n" + ((JSONObject) response).getString
                     ("name"));
         } catch (JSONException e) {
             e.printStackTrace();
